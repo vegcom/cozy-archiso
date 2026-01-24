@@ -1,3 +1,4 @@
 .env
 build/airootfs/root/.ssh/authorized_keys
 iso/*.iso
+build/work

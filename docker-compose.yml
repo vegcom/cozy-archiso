@@ -7,5 +7,7 @@ services:
       - .env
     privileged: true
     volumes:
+      - ./ssh_authorized_keys:/build/airootfs/root/.ssh/authorized_keys
+      - ./build/airootfs/usr/local/bin/aria2-wrapper:/usr/local/bin/aria2-wrapper:ro
       - ./build:/build
       - ./iso:/iso
