@@ -1,0 +1,25 @@
+name: Build ArchISO
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: archlinux:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install archiso
+        run: |
+          pacman -Sy --noconfirm archiso
+
+      - name: Run setup script
+        run: |
+          chmod +x ./setup.sh
+          ./setup.sh

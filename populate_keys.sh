@@ -1,1 +1,0 @@
-find ~/.ssh/keys/  -type f -not -name '*.bak*' -not -name "git*" -name "*.pub" -exec cat {} \; | tee archlive/airootfs/root/.ssh/authorized_keys
