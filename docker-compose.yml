@@ -1,13 +1,22 @@
 services:
   builder:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - .env
+    image: archlinux:latest
+    command: ["/usr/local/bin/entrypoint.sh"]
     privileged: true
     volumes:
-      - ./ssh_authorized_keys:/build/airootfs/root/.ssh/authorized_keys
       - ./build/airootfs/usr/local/bin/aria2-wrapper:/usr/local/bin/aria2-wrapper:ro
+      - ./scripts/entrypoint.sh:/usr/local/bin/entrypoint.sh
       - ./build:/build
       - ./iso:/iso
+      # TODO : mount stuff we may want: bake in key/token from .env ()
+      #   - getntext evoked by scripts/entrypoint.sh
+      #     - provide base the following:
+      #- ssh_auth_volume:/build/airootfs/root/.ssh/authorized_keys
+      #- gh_token_volume:/build/airootfs/root/ithub_token
+      # ts_token_volume:/build/airootfs/root/ts_token_volume
+    # env_file:
+    #   - .env
+# volumes:
+#   ssh_auth_volume:
+#   gh_token_volume:
+

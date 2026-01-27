@@ -1,32 +1,40 @@
 #!/usr/bin/env bash
-set -euo pipefail
-set -x
+#set -euo pipefail
 
 BUILD_DIR="/build"
 WORK_DIR="${BUILD_DIR}/work"
 OUT_DIR="/iso"
-
-export WORK_DIR WORK_DIR OUT_DIR
-
-mkdir -vp "${WORK_DIR}"
 
 # If a command was passed, run it instead of building
 if [[ $# -gt 0 ]]; then
     exec "$@"
 fi
 
+echo -e "\e[42m ==> Starting ArchISO clean...\e[0m"
+pacman -Scc --noconfirm &>/dev/null
+pacman -Syy --noconfirm &>/dev/null
 
-echo "==> Starting ArchISO build"
-echo "    Build directory: ${BUILD_DIR}"
-echo "    Work directory:  ${WORK_DIR}"
-echo "    Output:          ${OUT_DIR}"
+echo -e "\e[42m ==> Create ArchISO environment...\e[0m"
+pacman -S --noconfirm archiso squashfs-tools arch-install-scripts gettext &>/dev/null
+
+echo -e "\e[42m ==> Starting ArchISO build...\e[0m"
+echo -e "\e[33m    Build directory: ${BUILD_DIR}\e[0m"
+echo -e "\e[33m    Work directory:  ${WORK_DIR}\e[0m"
+echo -e "\e[33m    Output:          ${OUT_DIR}\e[0m"
 
 if [[ ! -f "${BUILD_DIR}/profiledef.sh" ]]; then 
-  echo "ERROR: /build does not contain an ArchISO profile"
+  echo -e  "\e[41m ERROR: /build does not contain an ArchISO profile \e[0m"
   ls -l "${BUILD_DIR}" 
   exit 1
 fi
 
-mkarchiso -v -w "${WORK_DIR}" -o "${OUT_DIR}" "${BUILD_DIR}"
+echo -e "\e[42m ==> Removing pacman lock just in case...\e[0m"
+if ! rm -f /var/lib/pacman/db.lck ; then
+  echo -e  "\e[41m ERROR: /var/lib/pacman/db.lck removal failed \e[0m"
+fi
 
-echo "==> Build complete"
+if ! mkarchiso -r -m iso -C "${BUILD_DIR}/pacman.conf" -w "${WORK_DIR}" -o "${OUT_DIR}" "${BUILD_DIR}" ; then
+  echo -e "\e[41m ==> ...Build failed \e[0m"
+else
+  echo -e "\e[42m ==> ...Build complete \e[0m"
+fi

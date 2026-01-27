@@ -21,5 +21,5 @@ jobs:
 
       - name: Run setup script
         run: |
-          chmod +x ./setup.sh
-          ./setup.sh
+          chmod +x ./scripts/entrypoint.sh
+          ./scripts/entrypoint.sh

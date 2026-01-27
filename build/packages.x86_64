@@ -20,7 +20,7 @@ livecd-sounds
 reflector
 
 # Networking
-systemd-networkd
+#systemd-networkd
 iwd
 
 # File systems

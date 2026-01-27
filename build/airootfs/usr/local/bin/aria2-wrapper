@@ -23,7 +23,6 @@ if command -v aria2c >/dev/null 2>&1; then
         --summary-interval=120 \
         --timeout=20 \
         --connect-timeout=10 \
-        --retry-on-5xx=true \
         --retry-on-400=true \
         --retry-on-host-error=true \
         --dir=/ \

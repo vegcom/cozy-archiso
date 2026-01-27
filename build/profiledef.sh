@@ -5,7 +5,7 @@ iso_name="cozy-arch"
 iso_label="COZY_ARCH"
 iso_publisher="Vegcom"
 iso_application="Cozy Arch Rescue ISO"
-iso_version="2026.01"
+iso_version="$(date --iso)"
 
 install_dir="arch"
 buildmodes=('iso')
