@@ -1,0 +1,4 @@
+#!/bin/bash
+# Cozy secrets - baked at ISO build time
+export GH_TOKEN='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'
+export GITHUB_TOKEN='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'

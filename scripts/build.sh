@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-#set -euo pipefail
+set -euo pipefail
 
-BUILD_DIR="/build"
-WORK_DIR="${BUILD_DIR}/work"
-OUT_DIR="/iso"
+BUILD_DIR="${BUILD_DIR:-./build}"
+WORK_DIR="${WORK_DIR:-$BUILD_DIR/work}"
+OUT_DIR="${OUT_DIR:-./iso}"
 
 # If a command was passed, run it instead of building
 if [[ $# -gt 0 ]]; then
@@ -11,8 +11,11 @@ if [[ $# -gt 0 ]]; then
 fi
 
 echo -e "\e[42m ==> Starting ArchISO clean...\e[0m"
-pacman -Scc --noconfirm &>/dev/null
-pacman -Syy --noconfirm &>/dev/null
+
+if [[ -f /.dockerenv ]]; then
+  pacman -Scc --noconfirm &>/dev/null
+  pacman -Sy --noconfirm --needed archiso squashfs-tools  arch-install-scripts &>/dev/null
+fi
 
 echo -e "\e[42m ==> Create ArchISO environment...\e[0m"
 pacman -S --noconfirm archiso squashfs-tools arch-install-scripts gettext &>/dev/null
@@ -23,7 +26,7 @@ echo -e "\e[33m    Work directory:  ${WORK_DIR}\e[0m"
 echo -e "\e[33m    Output:          ${OUT_DIR}\e[0m"
 
 if [[ ! -f "${BUILD_DIR}/profiledef.sh" ]]; then 
-  echo -e  "\e[41m ERROR: /build does not contain an ArchISO profile \e[0m"
+  echo -e  "\e[41m ERROR: ${BUILD_DIR} does not contain an ArchISO profile \e[0m"
   ls -l "${BUILD_DIR}" 
   exit 1
 fi

@@ -1,22 +1,14 @@
 services:
   builder:
     image: archlinux:latest
-    command: ["/usr/local/bin/entrypoint.sh"]
-    privileged: true
+    command: ["/usr/local/bin/build.sh"]
+    #privileged: true
     volumes:
-      - ./build/airootfs/usr/local/bin/aria2-wrapper:/usr/local/bin/aria2-wrapper:ro
-      - ./scripts/entrypoint.sh:/usr/local/bin/entrypoint.sh
       - ./build:/build
+      - ./build/airootfs/usr/local/bin/aria2-wrapper:/usr/local/bin/aria2-wrapper:ro
       - ./iso:/iso
-      # TODO : mount stuff we may want: bake in key/token from .env ()
-      #   - getntext evoked by scripts/entrypoint.sh
-      #     - provide base the following:
-      #- ssh_auth_volume:/build/airootfs/root/.ssh/authorized_keys
-      #- gh_token_volume:/build/airootfs/root/ithub_token
-      # ts_token_volume:/build/airootfs/root/ts_token_volume
-    # env_file:
-    #   - .env
-# volumes:
-#   ssh_auth_volume:
-#   gh_token_volume:
-
+      - ./scripts/build.sh:/usr/local/bin/build.sh
+    environment:
+      BUILD_DIR: "/build"
+      OUT_DIR: "/iso"
+      WORK_DIR: "/build/work"
