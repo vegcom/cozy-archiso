@@ -1,3 +1,63 @@
+# Core
+archiso
+base
+base-devel
+efibootmgr
+linux
+linux-firmware
+mkinitcpio
+mkinitcpio-archiso
+openssh
+squashfs-tools
+systemd-resolvconf
+
+# Chat
+irssi
+
+# Fun
+livecd-sounds
+
+# Compat
+reflector
+
+# Networking
+iwd
+
+# File systems
+nfs-utils
+
+# Serial-over-network
+ser2net
+
+# Tools
+nmap
+sudo
+tcpdump
+vim
+
+# Microcode
+amd-ucode
+intel-ucode
+
+# Partitioning
+dosfstools
+gptfdisk
+parted
+
+# PXE boot support (client side)
+mkinitcpio-nfs-utils
+nbd
+
+# Broadcom Wi-Fi
+b43-fwcutter
+broadcom-wl
+
+# VPN - Tailscale
+tailscale
+
+
+
+# Redundancy - old list
 alsa-utils
 amd-ucode
 arch-install-scripts

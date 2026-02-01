@@ -2,7 +2,7 @@ services:
   builder:
     image: archlinux:latest
     command: ["/usr/local/bin/build.sh"]
-    #privileged: true
+    privileged: true
     volumes:
       - ./build:/build
       - ./build/airootfs/usr/local/bin/aria2-wrapper:/usr/local/bin/aria2-wrapper:ro
@@ -12,3 +12,6 @@ services:
       BUILD_DIR: "/build"
       OUT_DIR: "/iso"
       WORK_DIR: "/build/work"
+    cap_add:
+      - SYS_ADMIN
+      - SYS_CHROOT
