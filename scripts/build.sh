@@ -31,8 +31,22 @@ if [[ ! -f "${BUILD_DIR}/profiledef.sh" ]]; then
   exit 1
 fi
 
+echo -e "\e[42m ==> Generating salt minion keypair...\e[0m"
+MINION_PKI="${BUILD_DIR}/airootfs/etc/salt/pki/minion"
+mkdir -p "$MINION_PKI"
+if [[ ! -f "$MINION_PKI/minion.pem" ]]; then
+    openssl genrsa -out "$MINION_PKI/minion.pem" 4096 2>/dev/null
+    openssl rsa -in "$MINION_PKI/minion.pem" -pubout -out "$MINION_PKI/minion.pub" 2>/dev/null
+    chmod 700 "$MINION_PKI"
+    chmod 600 "$MINION_PKI/minion.pem"
+    chmod 644 "$MINION_PKI/minion.pub"
+    echo -e "\e[33m    Keypair written to ${MINION_PKI}\e[0m"
+else
+    echo -e "\e[33m    Keypair already exists, skipping\e[0m"
+fi
+
 echo -e "\e[42m ==> Removing pacman lock just in case...\e[0m"
-if ! rm -f /var/lib/pacman/db.lck ; then
+if ! rm -f /var/lib/pacman/db.lck &>/dev/null; then
   echo -e  "\e[41m ERROR: /var/lib/pacman/db.lck removal failed \e[0m"
 fi
 

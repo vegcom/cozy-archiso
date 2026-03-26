@@ -3,3 +3,4 @@ build/airootfs/root/.ssh/authorized_keys
 iso/*
 build/work
 build.bak
+build/airootfs/etc/salt/pki/minion/*

@@ -11,6 +11,7 @@ install_dir="arch"
 buildmodes=('iso')
 bootmodes=('bios.syslinux'
            'uefi.systemd-boot')
+
 pacman_conf="pacman.conf"
 
 airootfs_image_type="squashfs"
@@ -30,5 +31,7 @@ file_permissions=(
   ["/etc/motd"]="0:0:644"
   ["/etc/ser2net.conf"]="0:0:600"
   ["/root/.ssh/authorized_keys"]="0:0:0600"
-
+  ["/etc/salt/pki/minion"]="0:0:0700"
+  ["/etc/salt/pki/minion/minion.pem"]="0:0:0600"
+  ["/etc/salt/pki/minion/minion.pub"]="0:0:0644"
 )

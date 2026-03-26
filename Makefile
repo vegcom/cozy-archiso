@@ -12,7 +12,7 @@ help:
 	@echo "  make all       # keys+shadow+params+build+usb"
 
 build:
-	sudo mkarchiso -vvv -r -m iso -w $(WORK_DIR) -o $(OUT_DIR) $(BUILD_DIR)
+	docker compose up -d && docker compose logs -f
 
 clean:
 	sudo rm -rf $(WORK_DIR)

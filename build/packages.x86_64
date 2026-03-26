@@ -55,8 +55,6 @@ broadcom-wl
 # VPN - Tailscale
 tailscale
 
-
-
 # Redundancy - old list
 alsa-utils
 amd-ucode
